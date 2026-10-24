@@ -15,13 +15,13 @@ function App() {
     event.preventDefault();
     setMessage("");
 
-    // 1. Check empty fields
+    // Check empty fields
     if (!email.trim() || !password) {
       setMessage("Please enter both email and password.");
       return;
     }
 
-    // 2. Validate email
+    // Validate email
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailPattern.test(email.trim())) {
@@ -29,7 +29,7 @@ function App() {
       return;
     }
 
-    // 3. Validate password length
+    // Validate password
     if (password.length < 6) {
       setMessage("Password must contain at least 6 characters.");
       return;
@@ -38,7 +38,7 @@ function App() {
     try {
       setLoading(true);
 
-      // 4. Send login details to backend
+      // Send login details to backend
       const response = await fetch("http://localhost:5000/login", {
         method: "POST",
         headers: {
@@ -52,15 +52,14 @@ function App() {
 
       const data = await response.json();
 
-      // 5. Handle login response
       if (response.ok && data.success) {
         navigate("/dashboard");
       } else {
         setMessage(data.message || "Invalid email or password.");
       }
-    } catch {
+    } catch (error) {
       setMessage(
-        "Unable to connect to the server. Please try again."
+        "Unable to connect to the server. Please check whether the backend is running."
       );
     } finally {
       setLoading(false);
@@ -69,19 +68,25 @@ function App() {
 
   return (
     <main className="login-page">
+      {/* Background effects */}
       <div className="background-glow glow-one"></div>
       <div className="background-glow glow-two"></div>
 
+      {/* Header */}
       <header className="brand-header">
         <a className="brand-logo" href="/">
           <span className="brand-icon">C</span>
           <span>CINEMORA</span>
         </a>
 
-        <span className="header-label">YOUR WORLD OF STORIES</span>
+        <span className="header-label">
+          YOUR WORLD OF STORIES
+        </span>
       </header>
 
+      {/* Main content */}
       <section className="login-layout">
+        {/* Welcome section */}
         <div className="welcome-section">
           <span className="eyebrow">
             ✦ YOUR NEXT CHAPTER STARTS HERE
@@ -94,13 +99,14 @@ function App() {
           </h1>
 
           <p className="welcome-description">
-            Step into a world of unforgettable stories,
-            cinematic moments and extraordinary experiences.
+            Step into a world of unforgettable stories, cinematic
+            moments and extraordinary experiences.
           </p>
 
           <div className="feature-list">
             <div className="feature-item">
               <span className="feature-icon">✦</span>
+
               <div>
                 <h3>Discover something new</h3>
                 <p>Find stories made for your taste.</p>
@@ -109,6 +115,7 @@ function App() {
 
             <div className="feature-item">
               <span className="feature-icon">▶</span>
+
               <div>
                 <h3>Your stories, your space</h3>
                 <p>A personal experience, made for you.</p>
@@ -117,9 +124,12 @@ function App() {
           </div>
         </div>
 
+        {/* Login card */}
         <section className="login-card">
           <div className="card-heading">
-            <span className="card-label">MEMBER ACCESS</span>
+            <span className="card-label">
+              MEMBER ACCESS
+            </span>
 
             <h2>Welcome back</h2>
 
@@ -127,8 +137,11 @@ function App() {
           </div>
 
           <form onSubmit={handleLogin} noValidate>
+            {/* Email field */}
             <div className="form-group">
-              <label htmlFor="email">Email address</label>
+              <label htmlFor="email">
+                Email address
+              </label>
 
               <input
                 id="email"
@@ -136,14 +149,18 @@ function App() {
                 inputMode="email"
                 placeholder="you@example.com"
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={(event) =>
+                  setEmail(event.target.value)
+                }
                 autoComplete="username"
-                aria-describedby={message ? "login-message" : undefined}
               />
             </div>
 
+            {/* Password field */}
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">
+                Password
+              </label>
 
               <div className="password-wrapper">
                 <input
@@ -151,16 +168,22 @@ function App() {
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
                   value={password}
-                  onChange={(event) => setPassword(event.target.value)}
+                  onChange={(event) =>
+                    setPassword(event.target.value)
+                  }
                   autoComplete="current-password"
                 />
 
                 <button
                   type="button"
                   className="password-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() =>
+                    setShowPassword(!showPassword)
+                  }
                   aria-label={
-                    showPassword ? "Hide password" : "Show password"
+                    showPassword
+                      ? "Hide password"
+                      : "Show password"
                   }
                 >
                   {showPassword ? "Hide" : "Show"}
@@ -168,26 +191,26 @@ function App() {
               </div>
             </div>
 
+            {/* Error message */}
             {message && (
-              <p
-                className="error-message"
-                id="login-message"
-                role="alert"
-              >
+              <p className="error-message" role="alert">
                 {message}
               </p>
             )}
 
+            {/* Sign in button */}
             <button
               className="sign-in-button"
               type="submit"
               disabled={loading}
             >
               {loading ? "Signing in..." : "Sign In"}
+
               {!loading && <span>→</span>}
             </button>
           </form>
 
+          {/* Demo credentials */}
           <div className="login-divider">
             <span>DEMO ACCESS</span>
           </div>
@@ -210,8 +233,10 @@ function App() {
         </section>
       </section>
 
+      {/* Footer */}
       <footer className="login-footer">
         <span>© 2026 CINEMORA</span>
+
         <span>DESIGNED FOR YOUR NEXT CHAPTER</span>
       </footer>
     </main>
