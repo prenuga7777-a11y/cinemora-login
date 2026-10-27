@@ -39,7 +39,7 @@ function App() {
       setLoading(true);
 
       // Send login details to backend
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch("https://cinemora-login.onrender.com/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
